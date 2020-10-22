@@ -9,4 +9,8 @@ function createInstance(): AxiosInstance {
   return instance as AxiosInstance
 }
 
+const axios = createInstance()
+
+export default axios
+
 
