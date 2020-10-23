@@ -8,6 +8,7 @@ import {
 } from '../types'
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './interceptorManager'
+import mergeConfig from './mergeConfig'
 
 interface Interceptors {
   request: InterceptorManager<AxiosRequestConfig>
@@ -20,9 +21,11 @@ interface PromiseChain<T> {
 }
 
 export default class Axios {
+  defaults: AxiosRequestConfig // 默认配置
   interceptors: Interceptors
 
-  constructor() {
+  constructor(initConfig: AxiosRequestConfig) {
+    this.defaults = initConfig
     this.interceptors = {
       request: new InterceptorManager<AxiosRequestConfig>(),
       response: new InterceptorManager<AxiosResponse>()
@@ -42,10 +45,16 @@ export default class Axios {
       config = url
     }
 
-    const chain: PromiseChain<any>[] = [{
-      resolved: dispatchRequest,
-      rejected: undefined
-    }]
+    // 合并配置
+
+    config = mergeConfig(this.defaults, config)
+
+    const chain: PromiseChain<any>[] = [
+      {
+        resolved: dispatchRequest,
+        rejected: undefined
+      }
+    ]
 
     this.interceptors.request.forEach(interceptor => {
       chain.unshift(interceptor)
@@ -94,18 +103,21 @@ export default class Axios {
   }
 
   _requestMehodWithoutData(method: Method, url: string, config?: AxiosRequestConfig) {
-    return this.request(Object.assign(config || {}, {
-      method,
-      url
-    }))
+    return this.request(
+      Object.assign(config || {}, {
+        method,
+        url
+      })
+    )
   }
 
   _requestMehodWithData(method: Method, url: string, data?: any, config?: AxiosRequestConfig) {
-    return this.request(Object.assign(config || {}, {
-      method,
-      url,
-      data
-    }))
+    return this.request(
+      Object.assign(config || {}, {
+        method,
+        url,
+        data
+      })
+    )
   }
-
 }

@@ -1,6 +1,8 @@
-import { isPlainObject } from './util'
+import { deepMerge, isPlainObject } from './util'
+import { Method } from '../types'
 
-function normalizeHeaderName(headers: any, normalizedName: string): void {   // 如果axios传入的是小写的content-type, 但是下面判断用的是 大写，所以统一成大写，删除小写
+function normalizeHeaderName(headers: any, normalizedName: string): void {
+  // 如果axios传入的是小写的content-type, 但是下面判断用的是 大写，所以统一成大写，删除小写
   if (!headers) {
     return
   }
@@ -39,4 +41,17 @@ export function parseHeaders(headers: string): any {
     parsed[key] = val
   })
   return parsed
+}
+
+export function flattenHeaders(headers: any, method: Method): any {
+  if (!headers) {
+    // 已经有默认default config了, headers肯定有值, 还需要这步判断吗?
+    return headers
+  }
+  headers = deepMerge(headers.common || {}, headers[method] || {}, headers)
+  const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
+  methodsToDelete.forEach(method => {
+    delete headers[method]
+  })
+  return headers
 }

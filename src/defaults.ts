@@ -7,6 +7,19 @@ const defaults: AxiosRequestConfig = {
     common: {
       Accept: 'application/json, text/plain, */*'
     }
+    // delete: {},
+    // get: {},
+    // head: {},
+    // options: {},
+    // post: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // },
+    // put: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // },
+    // patch: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // }
   }
 }
 
