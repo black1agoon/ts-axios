@@ -16,7 +16,7 @@ interface Interceptors {
 }
 
 interface PromiseChain<T> {
-  resolved: ResolvedFn<T> | ((config: AxiosRequestConfig) => AxiosPromise) //
+  resolved: ResolvedFn<T> | ((config: AxiosRequestConfig) => AxiosPromise) // ResolvedFn 或 dispatch的类型
   rejected?: RejectedFn
 }
 
@@ -49,18 +49,19 @@ export default class Axios {
 
     config = mergeConfig(this.defaults, config)
 
-    const chain: PromiseChain<any>[] = [
+    // const chain: PromiseChain<any>[] = [
+    const chain: Array<PromiseChain<any>> = [
       {
         resolved: dispatchRequest,
         rejected: undefined
       }
     ]
 
-    this.interceptors.request.forEach(interceptor => {
+    this.interceptors.request.forEach2(interceptor => {
       chain.unshift(interceptor)
     })
 
-    this.interceptors.response.forEach(interceptor => {
+    this.interceptors.response.forEach2(interceptor => {
       chain.push(interceptor)
     })
 

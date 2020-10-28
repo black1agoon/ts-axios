@@ -24,6 +24,14 @@ function deepMergeStrat(val1: any, val2: any): any {
   }
 }
 
+function mergeTransform(val: any, val2: any): any {
+  if (Array.isArray(val2)) {
+    return val.concat(val2)
+  } else {
+    return val
+  }
+}
+
 const stratKeysFromVal2 = ['url', 'params', 'data']
 
 stratKeysFromVal2.forEach(key => {
@@ -34,6 +42,12 @@ const stratKeysDeepMerge = ['headers']
 stratKeysDeepMerge.forEach(key => {
   strats[key] = deepMergeStrat
 })
+
+const stratKeysTransform = ['transformRequest']
+stratKeysTransform.forEach(key => {
+  strats[key] = mergeTransform
+})
+
 /**
  *
  * @param config1 默认配置

@@ -23,8 +23,10 @@ export interface AxiosRequestConfig {
   responseType?: XMLHttpRequestResponseType
   timeout?: number
 
-  transformRequest: AxiosTransformer | AxiosTransformer[]
-  transformResponse: AxiosTransformer | AxiosTransformer[]
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
+
+  cancelToken?: CancelToken
 
   [propName: string]: any
 }
@@ -78,13 +80,19 @@ export interface AxiosInstance extends Axios {
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
+}
+
 export interface AxiosInterceptorManager<T> {
+  // 定义拦截器类的接口
   use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
   eject(id: number): void
 }
 
 export interface ResolvedFn<T> {
-  (val: T): T | Promise<T> // T 可能是AxiosRequestConfig类型就是同步返回T, 其他可能是异步promise
+  // T 可能是 AxiosRequestConfig 或 AxiosResponse 类型
+  (val: T): T | Promise<T>
 }
 
 export interface RejectedFn {
@@ -93,4 +101,18 @@ export interface RejectedFn {
 
 export interface AxiosTransformer {
   (data: any, headers?: any): any
+}
+
+// 取消
+export interface CancelToken {
+  promise: Promise<string>
+  resason?: string
+}
+
+export interface Canceler {
+  (message?: string): void
+}
+
+export interface CancelExecutor {
+  (cancel: Canceler): void
 }

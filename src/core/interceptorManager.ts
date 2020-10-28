@@ -1,11 +1,12 @@
-import { ResolvedFn, RejectedFn} from '../types'
+import { ResolvedFn, RejectedFn } from '../types'
 
 interface Interceptor<T> {
   resolved: ResolvedFn<T>
   rejected?: RejectedFn
 }
 
-export default class InterceptorManager<T> {   // 拦截器类
+export default class InterceptorManager<T> {
+  // 拦截器类
   private interceptors: Array<Interceptor<T> | null>
 
   constructor() {
@@ -20,7 +21,7 @@ export default class InterceptorManager<T> {   // 拦截器类
     return this.interceptors.length - 1
   }
 
-  forEach(fn: (interceptor: Interceptor<T>) => void): void {
+  forEach2(fn: (interceptor: Interceptor<T>) => void): void {
     this.interceptors.forEach(interceptor => {
       if (interceptor !== null) {
         fn(interceptor)
@@ -28,7 +29,7 @@ export default class InterceptorManager<T> {   // 拦截器类
     })
   }
 
-  eject(id: number):void {
+  eject(id: number): void {
     if (this.interceptors[id]) {
       this.interceptors[id] = null
     }
