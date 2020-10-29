@@ -7,6 +7,8 @@ import { flattenHeaders, processHeaders } from '../helpers/headers'
 import transform from './transform' // 导入转化函数
 
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
+  throwIfCancellationRequested(config)
+
   processConfig(config) // 解析参数 params、data
   return xhr(config).then(res => {
     return transformResponseData(res)
@@ -42,3 +44,9 @@ function transformResponseData(res: AxiosResponse): AxiosResponse {
 //   const { headers = {}, data } = config // 给 headers 赋默认值不为空, 因为在pocessHeaders 判断了headers不为空 才执行逻辑
 //   return processHeaders(headers, data)
 // }
+
+function throwIfCancellationRequested(config: AxiosRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
+}
