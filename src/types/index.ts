@@ -28,6 +28,14 @@ export interface AxiosRequestConfig {
 
   cancelToken?: CancelToken
 
+  withCredentials?: boolean
+
+  xsrfCookieName?: string // 防御 xsrf 攻击
+  xsrfHeaderName?: string
+
+  onDownloadProgress?: (e: ProgressEvent) => void // 监听上传和下载
+  onUploadProgress?: (e: ProgressEvent) => void
+
   [propName: string]: any
 }
 
