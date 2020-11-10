@@ -50,7 +50,7 @@ methodsNoData.forEach(method => {
   defaults.headers[method] = {}
 })
 
-const methodsWithData = ['post', 'put', 'patch']
+const methodsWithData = ['post', 'put', 'patch'] // 给post请求设置默认 Content-Type
 methodsWithData.forEach(method => {
   defaults.headers[method] = {
     'Content-Type': 'application/x-www-form-urlencoded'
