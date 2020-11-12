@@ -7,7 +7,7 @@ import { flattenHeaders, processHeaders } from '../helpers/headers'
 import transform from './transform' // 导入转化函数
 
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
-  throwIfCancellationRequested(config)
+  throwIfCancellationRequested(config) // 发送请求前  检测cancelToken是否已经使用
 
   processConfig(config) // 解析参数 params、data
   return xhr(config).then(

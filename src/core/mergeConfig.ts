@@ -19,7 +19,7 @@ function deepMergeStrat(val1: any, val2: any): any {
     return val2
   } else if (isPlainObject(val1)) {
     return deepMerge(val1)
-  } else if (typeof val1 !== 'undefined') {
+  } else {
     return val1
   }
 }
@@ -49,7 +49,7 @@ stratKeysTransform.forEach(key => {
 })
 
 /**
- *
+ * 将config1 合并到 config2
  * @param config1 默认配置
  * @param config2 自定义配置
  */
