@@ -28,10 +28,10 @@ export interface AxiosRequestConfig {
 
   cancelToken?: CancelToken
 
-  withCredentials?: boolean
+  withCredentials?: boolean // 默认情况下 同源的请求是可以携带cookie的, 但是不同源的话, 就不能携带cookie, 但是设置 withCredentials 为 true 就可以了
 
-  xsrfCookieName?: string // 防御 xsrf 攻击
-  xsrfHeaderName?: string
+  xsrfCookieName?: string // 防御 xsrf 攻击  request请求后, 后端set cookie的名字, 存储 token 的 cookie 名称
+  xsrfHeaderName?: string // 发起请求 header 中 所带 token 的名称
 
   onDownloadProgress?: (e: ProgressEvent) => void // 监听上传和下载
   onUploadProgress?: (e: ProgressEvent) => void
@@ -139,7 +139,7 @@ export interface AxiosTransformer {
 // 取消
 export interface CancelToken {
   promise: Promise<Cancel>
-  resason?: Cancel
+  reason?: Cancel
 
   throwIfRequested(): void // 比如 cancelToken 已经被使用过
 }
