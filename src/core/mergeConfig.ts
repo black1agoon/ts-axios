@@ -24,13 +24,13 @@ function deepMergeStrat(val1: any, val2: any): any {
   }
 }
 
-function mergeTransform(val: any, val2: any): any {
-  if (Array.isArray(val2)) {
-    return val.concat(val2)
-  } else {
-    return val
-  }
-}
+// function mergeTransform(val: any, val2: any): any {
+//   if (Array.isArray(val2)) {
+//     return val.concat(val2)
+//   } else {
+//     return val
+//   }
+// }
 
 const stratKeysFromVal2 = ['url', 'params', 'data']
 
@@ -43,10 +43,10 @@ stratKeysDeepMerge.forEach(key => {
   strats[key] = deepMergeStrat
 })
 
-const stratKeysTransform = ['transformRequest']
-stratKeysTransform.forEach(key => {
-  strats[key] = mergeTransform
-})
+// const stratKeysTransform = ['transformRequest']
+// stratKeysTransform.forEach(key => {
+//   strats[key] = mergeTransform
+// })
 
 /**
  * 将config1 合并到 config2

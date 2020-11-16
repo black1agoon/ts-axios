@@ -15,14 +15,14 @@ axios.get('/more/get').then(res => {
 //   console.log(res)
 // })
 
-const instance = axios.create({
-  xsrfCookieName: 'XSRF-TOKEN-D',
-  xsrfHeaderName: 'X-XSRF-TOKEN-D'
-})
-
-instance.get('/more/get').then(res => {
-  console.log(res)
-})
+// const instance = axios.create({
+//   xsrfCookieName: 'XSRF-TOKEN-D',
+//   xsrfHeaderName: 'X-XSRF-TOKEN-D'
+// })
+//
+// instance.get('/more/get').then(res => {
+//   console.log(res)
+// })
 
 
 // 上传 下载
@@ -79,7 +79,6 @@ uploadEl!.addEventListener('click', e => {
   const fileEl = document.getElementById('file') as HTMLInputElement
   if (fileEl.files) {
     data.append('file', fileEl.files[0])
-
     instance.post('/more/upload', data)
   }
 })
