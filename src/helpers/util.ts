@@ -50,3 +50,7 @@ export function deepMerge(...objs: any[]): any {
   })
   return result
 }
+
+function aaa(foo: number) {
+  console.log(foo)
+}

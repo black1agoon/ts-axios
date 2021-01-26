@@ -14,6 +14,6 @@ then
   npm version $VERSION --message "[release] $VERSION"
   git push origin master
 
-  # publish
+  # publish 发布 package.json 中 "files": ["dist"] 中的文件到 npm
   npm publish
 fi
